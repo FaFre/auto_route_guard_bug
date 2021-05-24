@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_route_guard_bug/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,9 +18,13 @@ class SignInPage extends HookWidget {
         body: signInFuture.when(
       data: (value) {
         print('Has Data');
-        WidgetsBinding.instance?.addPostFrameCallback((duration) {
-          onComplete?.call();
-        });
+        if (context.routeData.isActive) {
+          print('call');
+
+          WidgetsBinding.instance?.addPostFrameCallback((duration) {
+            onComplete?.call();
+          });
+        }
         return SizedBox.shrink();
       },
       loading: () {
